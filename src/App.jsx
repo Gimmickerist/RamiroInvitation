@@ -157,7 +157,6 @@ function App() {
 
   return (
     <div className="page">
-      <a className="skip-link" href="#rsvp">Skip to RSVP</a>
       <Snow />
       <Lights />
 
@@ -171,7 +170,7 @@ function App() {
             <br />
             Christmas
           </h1>
-          <p className="date-pill">📅 December 25 &nbsp;•&nbsp; 🕙 11:00 AM</p>
+          <p className="date-pill">📅 December 25 &nbsp;•&nbsp; 🕙 10:00 AM</p>
           <div className="hero-actions">
             <a href="#details" className="btn">
               See the details <span aria-hidden="true">↓</span>
@@ -183,7 +182,6 @@ function App() {
         </div>
       </header>
 
-      <main id="main-content">
       <section className="countdown card" aria-labelledby="countdown-title">
         <div className="section-heading">
           <p className="section-kicker">The celebration begins in</p>
@@ -202,105 +200,6 @@ function App() {
         </button>
       </section>
 
-      <section id="rsvp" className="card rsvp" aria-labelledby="rsvp-title">
-        <div className="section-heading">
-          <p className="section-kicker">Let us know</p>
-          <h2 id="rsvp-title">RSVP</h2>
-        </div>
-
-        <form className="rsvp-form" onSubmit={handleSubmit} aria-busy={submitting}>
-          <label className="field">
-            <span>Name</span>
-            <input
-              type="text"
-              name="name"
-              autoComplete="name"
-              value={rsvpName}
-              onChange={(event) => setRsvpName(event.target.value)}
-              placeholder="Your name"
-              required
-            />
-          </label>
-
-          <label className="field">
-            <span>How many will attend?</span>
-            <input
-              type="number"
-              name="attendingCount"
-              min="1"
-              max="20"
-              step="1"
-              inputMode="numeric"
-              value={attendingCount}
-              onChange={(event) => setAttendingCount(event.target.value)}
-              required
-            />
-          </label>
-
-          <fieldset className="field status-field">
-            <legend>Will you be joining us?</legend>
-            <div className="rsvp-options">
-              <label className="choice">
-                <input
-                  type="radio"
-                  name="rsvp-status"
-                  value="attending"
-                  required
-                  checked={rsvpStatus === 'attending'}
-                  onChange={() => setRsvpStatus('attending')}
-                />
-                Yes
-              </label>
-              <label className="choice">
-                <input
-                  type="radio"
-                  name="rsvp-status"
-                  value="maybe"
-                  checked={rsvpStatus === 'maybe'}
-                  onChange={() => setRsvpStatus('maybe')}
-                />
-                Maybe
-              </label>
-              <label className="choice">
-                <input
-                  type="radio"
-                  name="rsvp-status"
-                  value="declined"
-                  checked={rsvpStatus === 'declined'}
-                  onChange={() => setRsvpStatus('declined')}
-                />
-                No
-              </label>
-            </div>
-          </fieldset>
-
-          <label className="field">
-            <span>Message (optional)</span>
-            <textarea
-              name="message"
-              rows="3"
-              value={rsvpNote}
-              onChange={(event) => setRsvpNote(event.target.value)}
-              placeholder="Add a note for the family"
-            />
-          </label>
-
-          <button type="submit" className="btn" disabled={submitting}>
-            {submitting ? 'Sending…' : 'Send RSVP'}
-          </button>
-
-          {submitted && (
-            <p className="success" role="status">
-              Thanks! Your RSVP request was sent. The page cannot confirm Google’s response, so contact the family if you need confirmation.
-            </p>
-          )}
-          {submitError && (
-            <p className="rsvp-error" role="alert">
-              {submitError}
-            </p>
-          )}
-        </form>
-      </section>
 
       <section id="details" className="details-section" aria-labelledby="details-title">
         <div className="section-heading">
@@ -332,14 +231,12 @@ function App() {
       </section>
 
       <section className="card welcome" aria-labelledby="welcome-title">
+        <div className="welcome-mark" aria-hidden="true">❝</div>
         <p className="section-kicker">A message from our family</p>
         <h2 id="welcome-title">Maligayang Pasko!</h2>
-        <details className="welcome-message">
-          <summary>Read our family message</summary>
-          <p className="welcome-copy">
-            Maligayang pasko sa inyong lahat! Malugod naming ipagpapatuloy ang tradisyon ng pagkakaroon ng reunion tuwing ika 25 ng Disyembre. Kaya't inaanyayahan namin kayong lahat na makisaya sa aming Christmas Reunion. Huwag kalimutang magdala ng inyong mga regalo at maghanda para sa isang masayang pagtitipon kasama ang buong pamilya.
-          </p>
-        </details>
+        <p className="welcome-copy">
+          Maligayang pasko sa inyong lahat! Malugod naming ipagpapatuloy ang tradisyon ng pagkakaroon ng reunion tuwing ika 25 ng Disyembre. Kaya't inaanyayahan namin kayong lahat na makisaya sa aming Christmas Reunion. Huwag kalimutang magdala ng inyong mga regalo at maghanda para sa isang masayang pagtitipon kasama ang buong pamilya.
+        </p>
       </section>
 
       <section className="card directions" aria-labelledby="directions-title">
@@ -361,22 +258,100 @@ function App() {
               Open in Google Maps <span aria-hidden="true">↗</span>
             </a>
           </div>
-          <details className="map-details">
-            <summary>Preview the reunion location</summary>
-            <div className="map-frame">
-              <iframe
-                title="Google Maps Street View for the reunion location"
-                src="https://www.google.com/maps/embed?pb=!4v1794662950201!6m8!1m7!1s55n1VWzkVF2Ij2F7drRb6A!2m2!1d13.96345277790822!2d121.652011909449!3f310.76616545764193!4f19.336956330118213!5f0.7820865974627469"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </details>
+          <div className="map-frame">
+            <iframe
+              title="Google Maps Street View for the reunion location"
+              src="https://www.google.com/maps/embed?pb=!4v1794662950201!6m8!1m7!1s55n1VWzkVF2Ij2F7drRb6A!2m2!1d13.96345277790822!2d121.652011909449!3f310.76616545764193!4f19.336956330118213!5f0.7820865974627469"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+          </div>
         </div>
       </section>
 
-      </main>
+      <section id="rsvp" className="card rsvp" aria-labelledby="rsvp-title">
+        <div className="section-heading">
+          <p className="section-kicker">Let us know</p>
+          <h2 id="rsvp-title">RSVP</h2>
+        </div>
+
+        <form className="rsvp-form" onSubmit={handleSubmit}>
+          <label className="field">
+            <span>Name</span>
+            <input
+              type="text"
+              value={rsvpName}
+              onChange={(event) => setRsvpName(event.target.value)}
+              placeholder="Your name"
+              required
+            />
+          </label>
+
+          <label className="field">
+            <span>How many will attend?</span>
+            <input
+              type="number"
+              min="1"
+              max="20"
+              value={attendingCount}
+              onChange={(event) => setAttendingCount(event.target.value)}
+              placeholder="1"
+              required
+            />
+          </label>
+
+          <div className="field">
+            <span>Will you be joining us?</span>
+            <div className="rsvp-options">
+              <label className="choice">
+                <input
+                  type="radio"
+                  name="rsvp-status"
+                  checked={rsvpStatus === 'attending'}
+                  onChange={() => setRsvpStatus('attending')}
+                />
+                Yes
+              </label>
+              
+              <label className="choice">
+                <input
+                  type="radio"
+                  name="rsvp-status"
+                  checked={rsvpStatus === 'declined'}
+                  onChange={() => setRsvpStatus('declined')}
+                />
+                No
+              </label>
+            </div>
+          </div>
+
+          <label className="field">
+            <span>Message (optional)</span>
+            <textarea
+              rows="4"
+              value={rsvpNote}
+              onChange={(event) => setRsvpNote(event.target.value)}
+              placeholder="Add a note for the family"
+            />
+          </label>
+
+          <button type="submit" className="btn" disabled={submitting}>
+            {submitting ? 'Sending…' : 'Send RSVP'}
+          </button>
+
+          {submitted && (
+            <p className="success" role="status">
+              Thanks! Your RSVP request was sent. The page cannot confirm Google’s response, so contact the family if you need confirmation.
+            </p>
+          )}
+          {submitError && (
+            <p className="rsvp-error" role="alert">
+              {submitError}
+            </p>
+          )}
+        </form>
+      </section>
       <footer>
         <span aria-hidden="true">✦</span>
         <p>Made with love for the holidays</p>
