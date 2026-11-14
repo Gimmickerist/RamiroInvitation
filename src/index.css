@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;800&display=swap');
+
+:root {
+  --blue-900: #0b2a5b;
+  --blue-700: #1457b8;
+  --blue-500: #2f80ed;
+  --blue-200: #c8ddf6;
+  --blue-50: #eef6ff;
+  --white: #ffffff;
+  --gold: #ffc83d;
+  --red: #e5384f;
+  --heading: 'Mountains of Christmas', cursive;
+  --body: 'Nunito', system-ui, 'Segoe UI', Roboto, sans-serif;
+  font: 17px/1.5 var(--body);
+  color: var(--blue-900);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 5%, rgba(84, 160, 255, 0.62), transparent 48%),
+    linear-gradient(180deg, #123f80 0%, #397fcd 43%, #d7eaff 100%);
+  background-attachment: fixed;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--blue-900);
+}
+
+@media (max-width: 640px) {
+  :root {
+    font-size: 16px;
+  }
+}
