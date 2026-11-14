@@ -66,23 +66,15 @@
 
 .hero {
   display: grid;
-  min-height: clamp(350px, 45vw, 480px);
+  min-height: clamp(210px, 27vw, 290px);
   place-items: center;
-  padding: 36px 20px 56px;
+  padding: 24px 20px 36px;
   color: #fff;
   text-align: center;
 }
 
 .hero-content {
-  width: min(100%, 800px);
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 12px;
+  width: min(100%, 900px);
 }
 
 .eyebrow,
@@ -95,10 +87,11 @@
 }
 
 .hero h1 {
-  margin: 0 0 20px;
+  max-width: 860px;
+  margin: 0 auto 12px;
   font-family: var(--heading);
-  font-size: clamp(2.5rem, 7.2vw, 5rem);
-  line-height: 0.99;
+  font-size: clamp(2.25rem, 5.2vw, 4rem);
+  line-height: 1.02;
   text-wrap: balance;
   text-shadow: 0 3px 0 var(--blue-900), 0 8px 26px rgba(0, 0, 0, 0.24);
 }
@@ -109,8 +102,8 @@
 
 .date-pill {
   display: table;
-  margin: 0 auto 22px;
-  padding: 9px 18px;
+  margin: 0 auto 16px;
+  padding: 7px 16px;
   border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 999px;
   background: rgba(8, 35, 75, 0.28);
@@ -162,6 +155,65 @@
   background: var(--blue-900);
 }
 
+.section-tabs {
+  position: sticky;
+  top: 10px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: min(100%, 800px);
+  margin: 0 auto 18px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 24px rgba(7, 37, 82, 0.16);
+  backdrop-filter: blur(12px);
+}
+
+.section-tab {
+  display: flex;
+  min-width: 0;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--blue-700);
+  cursor: pointer;
+  font: 800 0.95rem var(--body);
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.section-tab:hover {
+  background: var(--blue-50);
+}
+
+.section-tab[aria-selected='true'] {
+  background: var(--blue-700);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--blue-900);
+}
+
+.section-tab:focus-visible,
+.invitation-panel:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.section-tab > span:first-child {
+  font-size: 1.15rem;
+}
+
+.invitation-panel {
+  min-height: 360px;
+  scroll-margin-top: 96px;
+}
+
 .card {
   position: relative;
   z-index: 1;
@@ -195,9 +247,9 @@
 }
 
 .countdown {
-  width: min(100%, 760px);
-  margin: -24px auto 42px;
-  padding-top: clamp(24px, 4vw, 36px);
+  width: min(100%, 920px);
+  margin: 0 auto 24px;
+  padding-top: clamp(20px, 3vw, 28px);
 }
 
 .countdown .section-heading {
@@ -206,7 +258,7 @@
 
 .rsvp {
   width: min(100%, 760px);
-  margin: 0 auto 42px;
+  margin: 0 auto 24px;
   text-align: left;
 }
 
@@ -319,7 +371,7 @@
 }
 
 .details-section {
-  margin-bottom: 42px;
+  margin-bottom: 24px;
   scroll-margin-top: 24px;
 }
 
@@ -364,10 +416,10 @@
 }
 
 .welcome {
-  width: min(100%, 850px);
+  width: min(100%, 920px);
   margin-right: auto;
   margin-left: auto;
-  padding: clamp(28px, 6vw, 56px);
+  padding: clamp(24px, 4vw, 40px);
   background:
     radial-gradient(ellipse at top, rgba(255, 200, 61, 0.16), transparent 58%),
     var(--white);
@@ -400,6 +452,8 @@
 
 .directions {
   overflow: hidden;
+  width: min(100%, 1040px);
+  margin: 0 auto 24px;
 }
 
 .directions-layout {
@@ -442,7 +496,7 @@
 
 .map-frame {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 18px;
   background: var(--blue-50);
@@ -462,7 +516,7 @@ footer {
   align-items: center;
   justify-content: center;
   gap: 8px 12px;
-  padding: 12px 8px 4px;
+  padding: 8px 8px 4px;
   color: rgba(8, 35, 75, 0.82);
   text-align: center;
 }
@@ -485,11 +539,15 @@ footer span {
   }
 
   .hero {
-    min-height: 390px;
+    min-height: 230px;
   }
 
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .directions-layout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   }
 }
 
@@ -514,17 +572,44 @@ footer span {
   }
 
   .hero {
-    min-height: 340px;
-    padding: 28px 4px 48px;
+    min-height: 210px;
+    padding: 22px 4px 30px;
   }
 
   .hero h1 {
-    font-size: clamp(2.35rem, 10.5vw, 3.2rem);
+    font-size: clamp(2.1rem, 9vw, 3rem);
   }
 
   .date-pill {
-    padding: 8px 13px;
+    margin-bottom: 12px;
+    padding: 7px 13px;
     font-size: 0.92rem;
+  }
+
+  .section-tabs {
+    top: 6px;
+    gap: 4px;
+    margin-bottom: 14px;
+    padding: 5px;
+    border-radius: 16px;
+  }
+
+  .section-tab {
+    min-height: 54px;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 3px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    line-height: 1.1;
+  }
+
+  .section-tab > span:first-child {
+    font-size: 1.1rem;
+  }
+
+  .invitation-panel {
+    min-height: 0;
   }
 
   .card {
@@ -533,8 +618,8 @@ footer span {
   }
 
   .countdown {
-    margin-top: -18px;
-    margin-bottom: 34px;
+    margin-top: 0;
+    margin-bottom: 18px;
   }
 
   .tile {
@@ -547,7 +632,7 @@ footer span {
   }
 
   .details-section {
-    margin-bottom: 34px;
+    margin-bottom: 18px;
   }
 
   .grid {
@@ -570,7 +655,7 @@ footer span {
   }
 
   .map-frame {
-    aspect-ratio: 1 / 0.82;
+    aspect-ratio: 16 / 10;
   }
 }
 
