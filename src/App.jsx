@@ -171,7 +171,7 @@ function App() {
             <br />
             Christmas
           </h1>
-          <p className="date-pill">📅 December 25 &nbsp;•&nbsp; 🕙 10:00 AM</p>
+          <p className="date-pill">📅 December 25 &nbsp;•&nbsp; 🕙 11:00 AM</p>
           <div className="hero-actions">
             <a href="#details" className="btn">
               See the details <span aria-hidden="true">↓</span>
