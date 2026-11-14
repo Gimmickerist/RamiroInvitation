@@ -3,7 +3,24 @@
   isolation: isolate;
   width: min(100% - 40px, 1120px);
   margin: 0 auto;
-  padding: 0 0 36px;
+  padding: 0 0 24px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  padding: 12px 16px;
+  transform: translateY(calc(-100% - 12px));
+  border-radius: 8px;
+  background: #fff;
+  color: var(--blue-900);
+  font-weight: 800;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 .snow {
@@ -66,7 +83,7 @@
 
 .hero {
   display: grid;
-  min-height: clamp(350px, 45vw, 480px);
+  min-height: clamp(300px, 38vw, 420px);
   place-items: center;
   padding: 36px 20px 56px;
   color: #fff;
@@ -150,7 +167,14 @@
 
 .btn:focus-visible {
   outline: 3px solid var(--gold);
-  outline-offset: 4px;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 2px var(--blue-900);
+}
+
+.btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
 }
 
 .btn-secondary {
@@ -165,7 +189,7 @@
 .card {
   position: relative;
   z-index: 1;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   padding: clamp(22px, 4vw, 40px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 26px;
@@ -196,17 +220,17 @@
 
 .countdown {
   width: min(100%, 760px);
-  margin: -24px auto 42px;
-  padding-top: clamp(24px, 4vw, 36px);
+  margin: -24px auto 24px;
+  padding-top: clamp(22px, 3vw, 30px);
 }
 
 .countdown .section-heading {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .rsvp {
   width: min(100%, 760px);
-  margin: 0 auto 42px;
+  margin: 0 auto 28px;
   text-align: left;
 }
 
@@ -217,20 +241,34 @@
 
 .rsvp-form {
   display: grid;
-  gap: 20px;
+  gap: 14px;
 }
 
 .field {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   color: var(--blue-900);
   font-weight: 800;
 }
 
-.field span {
+.field > span,
+.status-field legend {
   font-size: 0.92rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.status-field {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.status-field legend {
+  margin-bottom: 6px;
+  padding: 0;
+  font-weight: 800;
 }
 
 .field input,
@@ -247,8 +285,9 @@
 
 .field input:focus,
 .field textarea:focus {
-  outline: 3px solid rgba(255, 200, 61, 0.4);
-  border-color: var(--blue-700);
+  outline: 3px solid var(--blue-500);
+  outline-offset: 2px;
+  border-color: var(--blue-900);
 }
 
 .rsvp-options {
@@ -270,7 +309,40 @@
 }
 
 .choice input {
+  width: 18px;
+  height: 18px;
   accent-color: var(--red);
+}
+
+.welcome-message,
+.map-details {
+  color: #40546e;
+  text-align: left;
+}
+
+.welcome-message summary,
+.map-details summary {
+  width: fit-content;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  color: var(--blue-700);
+  cursor: pointer;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.welcome-message summary:focus-visible,
+.map-details summary:focus-visible {
+  outline: 3px solid var(--blue-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.welcome-message[open] summary {
+  margin-bottom: 8px;
 }
 
 .success {
@@ -319,7 +391,7 @@
 }
 
 .details-section {
-  margin-bottom: 42px;
+  margin-bottom: 28px;
   scroll-margin-top: 24px;
 }
 
@@ -367,7 +439,7 @@
   width: min(100%, 850px);
   margin-right: auto;
   margin-left: auto;
-  padding: clamp(28px, 6vw, 56px);
+  padding: clamp(22px, 4vw, 36px);
   background:
     radial-gradient(ellipse at top, rgba(255, 200, 61, 0.16), transparent 58%),
     var(--white);
@@ -387,12 +459,12 @@
 }
 
 .welcome h2 {
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 
 .welcome-copy {
   max-width: 680px;
-  margin: 0 auto;
+  margin: 0;
   color: #40546e;
   font-size: clamp(1rem, 2vw, 1.12rem);
   line-height: 1.85;
@@ -442,7 +514,8 @@
 
 .map-frame {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
+  margin-top: 8px;
   overflow: hidden;
   border-radius: 18px;
   background: var(--blue-50);
@@ -485,7 +558,7 @@ footer span {
   }
 
   .hero {
-    min-height: 390px;
+    min-height: 340px;
   }
 
   .grid {
@@ -514,8 +587,8 @@ footer span {
   }
 
   .hero {
-    min-height: 340px;
-    padding: 28px 4px 48px;
+    min-height: 300px;
+    padding: 24px 4px 38px;
   }
 
   .hero h1 {
@@ -534,7 +607,7 @@ footer span {
 
   .countdown {
     margin-top: -18px;
-    margin-bottom: 34px;
+    margin-bottom: 22px;
   }
 
   .tile {
@@ -547,7 +620,7 @@ footer span {
   }
 
   .details-section {
-    margin-bottom: 34px;
+    margin-bottom: 24px;
   }
 
   .grid {
@@ -570,7 +643,7 @@ footer span {
   }
 
   .map-frame {
-    aspect-ratio: 1 / 0.82;
+    aspect-ratio: 4 / 3;
   }
 }
 
