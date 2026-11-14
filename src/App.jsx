@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+const RSVP_ENDPOINT = import.meta.env.VITE_RSVP_ENDPOINT?.trim()
+
 const EVENT_MONTH = 11 // December (0-indexed)
 const EVENT_DAY = 25
 const EVENT_HOUR = 10
@@ -101,6 +103,13 @@ function downloadCalendar() {
 
 function App() {
   const c = useCountdown()
+  const [rsvpName, setRsvpName] = useState('')
+  const [attendingCount, setAttendingCount] = useState('1')
+  const [rsvpStatus, setRsvpStatus] = useState('attending')
+  const [rsvpNote, setRsvpNote] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const units = [
     ['Days', c.days],
@@ -108,6 +117,43 @@ function App() {
     ['Minutes', c.minutes],
     ['Seconds', c.seconds],
   ]
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const name = rsvpName.trim()
+    if (!RSVP_ENDPOINT) {
+      setSubmitError('RSVP is not connected yet. Please try again later.')
+      return
+    }
+
+    setSubmitting(true)
+    setSubmitError('')
+    setSubmitted(false)
+    try {
+      await fetch(RSVP_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          name,
+          attendingCount: Number(attendingCount),
+          status: rsvpStatus,
+          message: rsvpNote.trim(),
+        }),
+      })
+
+      setSubmitted(true)
+      setRsvpName('')
+      setAttendingCount('1')
+      setRsvpStatus('attending')
+      setRsvpNote('')
+    } catch (error) {
+      console.error('Unable to submit RSVP:', error)
+      setSubmitError('We could not submit your RSVP. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div className="page">
@@ -125,9 +171,14 @@ function App() {
             Christmas
           </h1>
           <p className="date-pill">📅 December 25 &nbsp;•&nbsp; 🕙 10:00 AM</p>
-          <a href="#details" className="btn">
-            See the details <span aria-hidden="true">↓</span>
-          </a>
+          <div className="hero-actions">
+            <a href="#details" className="btn">
+              See the details <span aria-hidden="true">↓</span>
+            </a>
+            <a href="#rsvp" className="btn btn-secondary">
+              RSVP here
+            </a>
+          </div>
         </div>
       </header>
 
@@ -148,6 +199,7 @@ function App() {
           <span aria-hidden="true">＋</span> Add to my calendar
         </button>
       </section>
+
 
       <section id="details" className="details-section" aria-labelledby="details-title">
         <div className="section-heading">
@@ -218,12 +270,104 @@ function App() {
         </div>
       </section>
 
+      <section id="rsvp" className="card rsvp" aria-labelledby="rsvp-title">
+        <div className="section-heading">
+          <p className="section-kicker">Let us know</p>
+          <h2 id="rsvp-title">RSVP</h2>
+        </div>
+
+        <form className="rsvp-form" onSubmit={handleSubmit}>
+          <label className="field">
+            <span>Name</span>
+            <input
+              type="text"
+              value={rsvpName}
+              onChange={(event) => setRsvpName(event.target.value)}
+              placeholder="Your name"
+              required
+            />
+          </label>
+
+          <label className="field">
+            <span>How many will attend?</span>
+            <input
+              type="number"
+              min="1"
+              max="20"
+              value={attendingCount}
+              onChange={(event) => setAttendingCount(event.target.value)}
+              placeholder="1"
+              required
+            />
+          </label>
+
+          <div className="field">
+            <span>Will you be joining us?</span>
+            <div className="rsvp-options">
+              <label className="choice">
+                <input
+                  type="radio"
+                  name="rsvp-status"
+                  checked={rsvpStatus === 'attending'}
+                  onChange={() => setRsvpStatus('attending')}
+                />
+                Yes
+              </label>
+              <label className="choice">
+                <input
+                  type="radio"
+                  name="rsvp-status"
+                  checked={rsvpStatus === 'maybe'}
+                  onChange={() => setRsvpStatus('maybe')}
+                />
+                Maybe
+              </label>
+              <label className="choice">
+                <input
+                  type="radio"
+                  name="rsvp-status"
+                  checked={rsvpStatus === 'declined'}
+                  onChange={() => setRsvpStatus('declined')}
+                />
+                No
+              </label>
+            </div>
+          </div>
+
+          <label className="field">
+            <span>Message (optional)</span>
+            <textarea
+              rows="4"
+              value={rsvpNote}
+              onChange={(event) => setRsvpNote(event.target.value)}
+              placeholder="Add a note for the family"
+            />
+          </label>
+
+          <button type="submit" className="btn" disabled={submitting}>
+            {submitting ? 'Sending…' : 'Send RSVP'}
+          </button>
+
+          {submitted && (
+            <p className="success" role="status">
+              Thanks! Your RSVP request was sent. The page cannot confirm Google’s response, so contact the family if you need confirmation.
+            </p>
+          )}
+          {submitError && (
+            <p className="rsvp-error" role="alert">
+              {submitError}
+            </p>
+          )}
+        </form>
+      </section>
       <footer>
         <span aria-hidden="true">✦</span>
         <p>Made with love for the holidays</p>
         <strong>From the Ramiro Family</strong>
         <span aria-hidden="true">✦</span>
       </footer>
+
+
     </div>
   )
 }
